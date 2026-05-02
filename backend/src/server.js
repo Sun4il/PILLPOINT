@@ -10,6 +10,9 @@ import path from 'path';
 import { spawn } from 'child_process';
 import { fileURLToPath } from 'url';
 import { randomUUID } from 'crypto';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import xss from 'xss-clean';
 
 const backendEnvFiles = [
   path.resolve(process.cwd(), '.env'),
@@ -1038,6 +1041,18 @@ const upsertShopkeeperProfile = async ({ mobile, name, email, shopName, shopAddr
 };
 
 const app = express();
+
+// Security middleware
+app.use(helmet());
+app.use(xss());
+
+// Rate limiting - prevent brute force attacks
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: { message: 'Too many requests, please try again later.' },
+});
+app.use('/api', limiter);
 
 app.use(cors({ origin: CLIENT_ORIGIN, credentials: true }));
 app.use(express.json({ limit: '2mb' }));

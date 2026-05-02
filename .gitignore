@@ -1,2 +1,47 @@
+# Environment files (NEVER commit these)
 .env
+.env.local
+.env.development
+.env.production
+.env.example
 backend/.env
+backend/.env.local
+
+# Python virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Node modules (usually committed in some projects, but can be large)
+# node_modules/
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local config files that might contain secrets
+*.local
+config.local.json
